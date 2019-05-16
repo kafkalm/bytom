@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Peralta">
+
+      <style>
+      body{
+        font-family: Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", sans-serif;
+        padding-top: 50px;
+        line-height: 1.3em;
+
+      }
+      .nav-tabs{
+        border-width: 0.1px;
+        border-color:rgb(44, 44, 44);
+      }
+      .nav-tabs > li > a{
+        color:rgb(200, 200, 200);
+      }
+      .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+          color: rgb(200,200,200) !important;
+          background-color: rgb(44, 44, 44) !important;
+          border-color: rgb(44, 44, 44) !important;
+      }
+      .nav-tabs > li > a:hover{
+        background-color:rgb(30, 30, 30) !important;
+          border: medium none;
+          border-radius: 0;
+          color:rgb(200,200,200);
+      }
+      .tab-pane{
+        padding-top:15px;
+      }
+      .card{
+        border:none;
+        border-radius: 0;
+      }
+      .li-class{
+        list-style: none;
+        border-bottom-style: solid;
+        border-bottom-width: 0.1px;
+        border-color:rgb(100, 100, 100);
+        font-size:15px;
+      }
+      th{
+        font-weight: 400;
+        font-size: 16px;
+        color: rgb(100, 100, 100);
+        text-align: center;
+      }
+      td{
+        text-align: center;
+      }
+      </style>
+      <title>数据展示</title>
+  </head>
+  <body style="background-attachment:fixed;background-color:rgb(80,80,80)">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:rgb(30, 30, 30)">
+      <a href= "#" class="navbar-brand text-white">基于大数据技术的大额交易对市场价格的画像设计<a>
+      <div class="navbar-nav d-inline text-white">Bytom BlockChain</div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+                      <div class="card col-5" style="width:100%;height:20rem;margin-left:15px;margin-top:4px;background-color:rgb(50, 50, 50) ">
+                          <div class="card-body" style="color:rgb(200,200,200)">
+                              <h5 class="card-title"><span style="color:lavender"><i class="far fa-chart-bar fa-lg"></i></span>
+                                  市场详细行情
+                              </h5>
+                              <hr></hr>
+                              <table style="width:100%;font-size:14px">
+                                <th  style="padding:0 0 15px 0;color:rgb(250,250,250)">比原链-泰达币</th>
+                                <tr>
+                                  <td style="color:tan">价格:<span style="color:wheat"><i class="fa fa-dollar-sign" style="font-size:14px"></i> {{ mk_usdt.rate }}</span></td>
+                                  <td style="color:peru">涨跌:
+                                    {% if mk_usdt.rate_percent[0] == '-' %}
+                                    <span style="color:springgreen">{{mk_usdt.rate_percent}}%</span>
+                                    {% else %}
+                                    <span style="color:crimson">{{mk_usdt.rate_percent}}%</span>
+                                  {% endif %}</td>
+                                  <td style="color:rgb(146, 129, 255)">24小时涨跌:{% if mk_usdt.trend == 'up' %}
+                                      <i class="fas fa-long-arrow-alt-up " style="color:crimson"></i>
+                                      {% else %}
+                                      <i class="fas fa-long-arrow-alt-down " style="color:springgreen"></i>
+                                      {% endif %}
+                                  </td>
+                                </tr>
+                                <th style="padding:20px 0 15px 0;color:rgb(250,250,250)">比原链-比特币</th>
+                                <tr>
+                                  <td style="color:tan">价格:<span style="color:wheat"><i class="fa fa-btc" style="font-size:14px"></i> {{ mk_btc.rate }}</span></td>
+                                  <td style="color:peru">涨跌:
+                                    {% if mk_btc.rate_percent[0] == '-' %}
+                                      <span style="color:springgreen">{{mk_btc.rate_percent}}%</span>
+                                      {% else %}
+                                      <span style="color:crimson">{{mk_btc.rate_percent}}%</span>
+                                    {% endif %}</td></td>
+                                  <td style="color:rgb(146, 129, 255)">24小时涨跌:{% if mk_usdt.trend == 'up' %}
+                                      <i class="fas fa-long-arrow-alt-up " style="color:crimson"></i>
+                                      {% else %}
+                                      <i class="fas fa-long-arrow-alt-down " style="color:springgreen"></i>
+                                      {% endif %}</td>
+                                </tr>
+                                <th style="padding:20px 0 15px 0;color:rgb(250,250,250)">比原链-以太坊</th>      
+                                <tr>
+                                  <td style="color:tan">价格: <span style="color:wheat">{{ mk_eth.rate }}</span></td>
+                                  <td style="color:peru">涨跌: 
+                                      {% if mk_eth.rate_percent[0] == '-' %}
+                                      <span style="color:springgreen">{{mk_eth.rate_percent}}%</span>
+                                      {% else %}
+                                      <span style="color:crimson">{{mk_eth.rate_percent}}%</span>
+                                    {% endif %}</td>
+                                  </td>
+                                  <td style="color:rgb(146, 129, 255)">24小时涨跌:
+                                    {% if mk_eth.trend == 'up' %}
+                                      <i class="fas fa-long-arrow-alt-up " style="color:crimson"></i>
+                                    {% else %}
+                                      <i class="fas fa-long-arrow-alt-down " style="color:springgreen"></i>
+                                    {% endif %}</td>
+                                </tr>
+                              </table>
+                          </div>
+                      </div>
+
+
+                      <div class="card" style="width: 55%;height:20rem; margin-top:4px;margin-left:10px;background-color:rgb(50,50,50)">
+                          <div class="card-body" style="color:rgb(200,200,200)">
+                              <h5 class="card-title"><span style="color:lavender"><i class="far fa-chart-bar fa-lg"></i></span>
+                                  最新单项交易行情
+                              </h5>
+                              <hr></hr>
+                                <table style="font-size:14px;text-align: center">
+                                    <th  style="width:25%;padding:0 0 15px 0;color:rgb(250,250,250)">比原链-泰达币</th>
+                                    <tr>
+                                        <td style="color:tan">价格:<span style="color:wheat"></style><i class="fa fa-dollar-sign" style="font-size:14px"></i> {{ tc_usdt.last }}</span></td>
+                                        <td style="color:peru">24小时最高/低价:<i class="fa fa-dollar-sign" style="font-size:14px;color:tan"></i> <span style="color:crimson">{{tc_usdt.high24hr}}</span> / <span style="color:springgreen">{{tc_usdt.low24hr}}</span></td>
+                                        <td style="color:rgb(146, 129, 255)">交易量: {{tc_usdt.baseVolume}}</td>
+                                    </tr>
+                                    <th style="padding:20px 0 15px 0;color:rgb(250,250,250)">比原链-比特币</th>
+                                    <tr>
+                                      <td style="color:tan">价格:<span style="color:wheat"><i class="fa fa-btc" style="font-size:14px"></i> {{ tc_btc.last }}</span></td>
+                                      <td style="color:peru">24小时最高/低价:<i class="fa fa-btc" style="font-size:14px;color:wheat"></i> <span style="color:crimson">{{tc_btc.high24hr}}</span> / <span style="color:springgreen">{{tc_btc.low24hr}}</span></td>
+                                      <td style="color:rgb(146, 129, 255)">交易量: {{tc_btc.baseVolume}}</td>
+                                    </tr>
+                                    <th style="padding:20px 0 15px 0;color:rgb(250,250,250)">比原链-以太坊</th>      
+                                    <tr>
+                                        <td style="color:tan">价格:<span style="color:wheat"> {{ tc_eth.last }}</span></td>
+                                        <td style="color:peru">24小时最高/低价: <span style="color:crimson">{{tc_eth.high24hr}}</span> / <span style="color:springgreen">{{tc_eth.low24hr}}</span></td>
+                                        <td style="color:rgb(146, 129, 255)">交易量: {{tc_eth.baseVolume}}</td>
+                                    </tr>
+                                  </table>
+                          </div>
+                      </div>
+
+                </div>
+                <div class="row">
+                <div class="card col-8" style="margin-left:15px;margin-top:8px;background-color:rgb(50,50,50)">
+                    <div class="card-body" style="color:rgb(200,200,200)">
+                        <h5 class="card-title">最近成交记录</h5>
+                          
+                          <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                              <a class="nav-link active" id="usdt-tab" data-toggle="tab" href="#usdt" role="tab" aria-controls="usdt" aria-selected="true"><i class="fas fa-money-check-alt mr-2"></i>比原链-泰达币(BTM-USDT)</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" id="btc-tab" data-toggle="tab" href="#btc" role="tab" aria-controls="btc" aria-selected="false"><i class="fas fa-money-check-alt mr-2"></i>比原链-比特币(BTM-BTC)</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" id="eth-tab" data-toggle="tab" href="#eth" role="tab" aria-controls="eth" aria-selected="false"><i class="fas fa-money-check-alt mr-2"></i>比原链-以太坊(BTM-ETH)</a>
+                            </li>
+                          </ul>
+                          <div id="myTabContent" class="tab-content">
+                            <div class="tab-pane fade show active" id="usdt" role="tabpanel" aria-labelledby="usdt-tab">
+                              <table>
+                                  <thead>
+                                    <tr>
+                                      <th style="width:10%">traceID</th>
+                                      <th>币种单价</th>
+                                      <th>成交币种数量</th>
+                                      <th>订单总额</th>
+                                      <th>交易类型</th>
+                                      <th>交易日期</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                {% for usdt in usdts %}
+                                <tr class="li-class">
+                                  <td style="color:steelblue">{{ usdt.tradeID }}</td>
+                                  <td style="color:wheat"><i class="fa fa-dollar-sign" style="font-size:14px"></i> {{ usdt.rate }}</td>
+                                  <td style="color:tan">{{ usdt.amount }}</td>
+                                  <td style="color:slateblue"><i class="fa fa-dollar-sign" style="font-size:14px"></i> {{ usdt.total }}</td>
+                                  {% if usdt.type == 'buy' %}
+                                  <td style="color:crimson">买入</td>
+                                    {% elif usdt.type == 'sell' %}
+                                  <td style="color:springgreen">卖出</td>
+                                  {% endif %}
+                                  <td style="color:rgb(100, 100, 100)">{{ usdt.date }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                              </table>
+                            </div>
+                            <div class="tab-pane fade" id="btc" role="tabpanel" aria-labelledby="btc-tab">
+                                <table>
+                                    <thead>
+                                      <tr>
+                                        <th style="width:10%">traceID</th>
+                                        <th>币种单价</th>
+                                        <th>成交币种数量</th>
+                                        <th>订单总额</th>
+                                        <th>交易类型</th>
+                                        <th>交易日期</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                  {% for btc in btcs %}
+                                  <tr class="li-class">
+                                    <td style="color:steelblue">{{ btc.tradeID }}</td>
+                                    <td style="color:wheat"><i class="fa fa-btc" style="font-size:14px"></i> {{ btc.rate }}</td>
+                                    <td style="color:tan">{{ btc.amount }}</td>
+                                    <td style="color:slateblue"><i class="fa fa-btc" style="font-size:14px"></i> {{ btc.total }}</td>
+                                    {% if btc.type == 'buy' %}
+                                  <td style="color:crimson">买入</td>
+                                    {% elif btc.type == 'sell' %}
+                                  <td style="color:springgreen">卖出</td>
+                                  {% endif %}
+                                    <td style="color:rgb(100, 100, 100)">{{ btc.date }}</td>
+                                  </tr>
+                                  {% endfor %}
+                                </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="eth" role="tabpanel" aria-labelledby="eth-tab">
+                                <table>
+                                    <thead>
+                                      <tr>
+                                        <th style="width:10%">traceID</th>
+                                        <th>币种单价</th>
+                                        <th>成交币种数量</th>
+                                        <th>订单总额</th>
+                                        <th>交易类型</th>
+                                        <th>交易日期</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                  {% for eth in eths %}
+                                  <tr class="li-class">
+                                    <td style="color:steelblue">{{ eth.tradeID }}</td>
+                                    <td style="color:wheat">{{ eth.rate }}</td>
+                                    <td style="color:tan">{{ eth.amount }}</td>
+                                    <td style="color:slateblue">{{ eth.total }}</td>
+                                    {% if eth.type == 'buy' %}
+                                  <td style="color:crimson">买入</td>
+                                    {% elif eth.type == 'sell' %}
+                                  <td style="color:springgreen">卖出</td>
+                                  {% endif %}
+                                    <td style="color:rgb(100, 100, 100)">{{ eth.date }}</td>
+                                  </tr>
+                                  {% endfor %}
+                                </tbody>
+                                </table>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+
+            <div class="card" style="width:30%;height: 220px;;margin-top:8px;margin-left:10px;background-color:rgb(50,50,50)">
+              <div class="card-body" style="color:rgb(200,200,200)">
+                <h5 class="card-title">市场价格动态预测(BTM-USDT)</h5>
+                <hr></hr>
+                <table style="border-collapse:separate; border-spacing:0px 10px;">
+                  <tr>
+                    <td style="color:rgb(146, 129, 255)">当日大额总成交量:</td>
+                    <td style="color:wheat"> {{ amount_sum }}</td>
+                  </tr>
+                  <tr>
+                    <td style="color:peru">当日大额成交笔数: </td>
+                    <td>{{ count }}笔</td>
+                  </tr>
+                  <tr>
+                    <td style="color:crimson">明日价格涨跌预测: </td>
+                    {% if predict == '-' %}
+                    <td style="color:springgreen">下跌 <i class="fas fa-long-arrow-alt-down "></i></td>
+                    {% elif predict == '+' %}
+                    <td style="color:crimson">上涨  <i class="fas fa-long-arrow-alt-up"></i></td>
+                    {% endif %}
+                  </tr>
+                </table>
+                <p style="font-size:12px;color:rgb(100, 100, 100);display:inline">数据预测基于机器学习,仅供参考</p>
+              </div>
+              <p style="font-size:12px;color:rgb(200, 200, 200);text-align: center">Copyright © 四缺一 2019</p>
+            </div>
+            
+      </div>
+    </div>
+    <script>
+      var c = document.getElementById("myCanvas");
+      var ctx=c.getContext("2d");
+
+    </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+
+</html>
