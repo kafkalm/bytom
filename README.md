@@ -9,25 +9,38 @@
 3.mykafka - 使用kafka推送消息，为实时数据提供高吞吐低延迟的平台，封装了kafka的各个模块  
     [kafka_client.py 接口文档](#kafka_clientpy)  
 
->4.Spark - SparkStreaming，SparkML组件的封装，为实时数据提供数据清洗、处理；对数据进行机器学习  
+>4.Spark - SparkStreaming组件的封装，为实时数据提供数据清洗、处理  
     [Spark 接口文档](#spark)  
 
 >5.config - 配置文件  
-  [config 文档](#config)  
-  settings.ini 为配置文件;  
-  config.py 为读取配置文件的函数
+    [config 文档](#config)  
+    settings.ini 为配置文件;  
+    config.py 为读取配置文件的函数
 
->3.log - 日志输出模块  
+>6.log - 日志输出模块  
     提示信息会在控制台输出，并会保存到LOGS文件夹中对应日期的.log文件中  
->
-4.LOGS - 存储日志的文件夹  
+
+>7.LOGS - 存储日志的文件夹  
+
+>8.MachineLearning - 机器学习相关算法、数据处理函数实现  
+    [MachineLearning 接口文档](#machinelearning)  
+
+>9.TrainingSet - 存放训练集的文件夹
+
+>10.fronted - 前端展示界面
+
 ##`主要依赖`  
 >- scrapy  
 >- pymongo  
 >- kafka-python  
 >- pyspark  
 >- kafka 2.20 Scala 2.12  
->- Spark 2.4.1 Hadoop 2.7
+>- Spark 2.4.1 Hadoop 2.7  
+>- numpy  
+>- pandas  
+>- scikit-learn  
+>- flask  
+
 ### `bytom_crawler`
 >###### 1.settings 配置文件设置
 \# MONGODB 相关配置  
@@ -52,7 +65,8 @@ GEN_SEEDS_FLAG = True
 CURRENCY_NAME = 'btm'  
 >###### 2.spiders  
   - coinmetrics.py # coinmetrics api爬取
-  - blockmeta.py # blockmeta api爬取
+  - blockmeta.py # blockmeta api 全量数据爬取
+  - blockmeta_update.py # blockmeta api 更新数据爬取
   - gate.py # gate api 爬取  
 >###### 3.pipelines.py  
  - class KafkaPipeline(object)  
@@ -136,8 +150,7 @@ CURRENCY_NAME = 'btm'
     2. msg:发送的消息(byte)  
   
 >######4.推送到Broker
-   - producer.flushMsg()  
-    #将缓存区内的消息都推送到Broker  
+   - producer.flushMsg() #将缓存区内的消息都推送到Broker  
 ### `Spark`
 >####`SparkStreaming`  
 >###### 1.导入封装的sparkstreaming类
@@ -159,7 +172,6 @@ CURRENCY_NAME = 'btm'
           'MONGODB_BATCH_SIZE' : INT #读取数量
         }
     '''
->####`SparkML`
 
 ### `config`  
 >###### 1.settings.ini 配置文件字段说明  
@@ -183,7 +195,41 @@ CURRENCY_NAME = 'btm'
 >BATCHDURATION =  
 >BROKERS =  
 >TOPICS =  
+
+>[TRAINING]  
+>TRAINING_SAVE_PATH =  
+>TRAINING_SET_NAME =  
+>TRAINING_LABELS_NAME =
 >###### 2.config.py 读取配置文件函数使用
 >- get_config(section,opition)  
     1. section:指定的配置节(str)  
     2. opition:配置字段(str)  
+
+### `MachineLearning`
+>###### 1.random_forest.py 随机森林算法
+   - Predict(X)  
+    1. X:要预测的向量([vector])  
+
+>###### 2.training_set_deal.py 训练集处理函数
+   - time_deal(t)  
+    1. t:时间戳(int)
+>
+		处理coinmetrics.csv , blockmeta.csv的时间戳对应关系
+		coinmetrics 时间戳为每日8:00 , 将blockmeta的时间戳 用 超过8:00则算下一日 未超过8:00则算前一日的方法处理
+   - gen_label(df):
+   	1. df:DataFrame
+>
+		生成训练集对应的label
+   - statistics(df):
+   	1. df:DataFrame
+>
+		统计blockmeta每个时间戳的大额交易量与交易数
+   - sync(df1,df2):
+   	1. df1:DataFrame(coinmetrics)
+   	2. df2:DataFrame(blockmeta)
+>
+		将统计量训练集 与 Labels 的时间戳同步
+   - gen_X(l):
+   	1. l:list
+>
+		将数据库中获取的数据传入,生成要预测的向量
